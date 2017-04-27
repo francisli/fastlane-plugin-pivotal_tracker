@@ -5,6 +5,21 @@ module Fastlane
         api_token = params[:api_token] || ENV["PIVOTAL_TRACKER_API_TOKEN"]
         project_id = params[:project_id] || ENV["PIVOTAL_TRACKER_PROJECT_ID"]
         UI.message("The add_pivotal_tracker_story plugin is working! #{api_token} #{project_id} #{params.inspect}")
+
+        uri = URI.parse("https://www.pivotaltracker.com/services/v5/projects/#{project_id}/stories")
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+
+        data = {}
+        data[:name] = params[:name]
+        data[:description] = params[:description] if !params[:description]
+        data[:type] = params[:type] if !params[:type]
+
+        response = http.post(uri.request_uri, data.to_json, {
+          'Content-Type': 'application/json',
+          'X-TrackerToken': api_token
+        })
+        UI.message("#{response.inspect}")
       end
 
       def self.description
