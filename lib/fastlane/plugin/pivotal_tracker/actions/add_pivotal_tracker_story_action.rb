@@ -41,7 +41,7 @@ module Fastlane
                                   optional: false,
                                       type: String),
           FastlaneCore::ConfigItem.new(key: :description,
-                               description: "In-depth explanation of the story requirements.",
+                               description: "In-depth explanation of the story requirements",
                                   optional: true,
                                       type: String),
           FastlaneCore::ConfigItem.new(key: :type,
