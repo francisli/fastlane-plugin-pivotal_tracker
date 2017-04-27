@@ -2,7 +2,9 @@ module Fastlane
   module Actions
     class AddPivotalTrackerStoryAction < Action
       def self.run(params)
-        UI.message("The add_pivotal_tracker_story plugin is working!")
+        api_token = params[:api_token] || ENV["PIVOTAL_TRACKER_API_TOKEN"]
+        project_id = params[:project_id] || ENV["PIVOTAL_TRACKER_PROJECT_ID"]
+        UI.message("The add_pivotal_tracker_story plugin is working! #{api_token} #{project_id} #{params.inspect}")
       end
 
       def self.description
@@ -24,11 +26,28 @@ module Fastlane
 
       def self.available_options
         [
-          # FastlaneCore::ConfigItem.new(key: :your_option,
-          #                         env_name: "PIVOTAL_TRACKER_YOUR_OPTION",
-          #                      description: "A description of your option",
-          #                         optional: false,
-          #                             type: String)
+          FastlaneCore::ConfigItem.new(key: :api_token,
+                                  env_name: "PIVOTAL_TRACKER_API_TOKEN",
+                               description: "API token",
+                                  optional: false,
+                                      type: String),
+          FastlaneCore::ConfigItem.new(key: :project_id,
+                                  env_name: "PIVOTAL_TRACKER_PROJECT_ID",
+                               description: "The ID of the project",
+                                  optional: false,
+                                      type: String),
+          FastlaneCore::ConfigItem.new(key: :name,
+                               description: "Name of the story",
+                                  optional: false,
+                                      type: String),
+          FastlaneCore::ConfigItem.new(key: :description,
+                               description: "In-depth explanation of the story requirements.",
+                                  optional: true,
+                                      type: String),
+          FastlaneCore::ConfigItem.new(key: :type,
+                               description: "Type of story. Valid enumeration values: feature, bug, chore, release",
+                                  optional: true,
+                                      type: String)
         ]
       end
 
