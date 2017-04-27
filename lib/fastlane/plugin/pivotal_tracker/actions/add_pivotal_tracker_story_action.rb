@@ -1,8 +1,8 @@
 module Fastlane
   module Actions
-    class PivotalTrackerAction < Action
+    class AddPivotalTrackerStoryAction < Action
       def self.run(params)
-        UI.message("The pivotal_tracker plugin is working!")
+        UI.message("The add_pivotal_tracker_story plugin is working!")
       end
 
       def self.description
